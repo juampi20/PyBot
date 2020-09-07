@@ -1,17 +1,18 @@
 import os
-from dotenv import load_dotenv
-load_dotenv()
-
 from discord.ext import commands
 
-bot = commands.Bot(command_prefix="-")
+bot = commands.Bot(command_prefix="_")
 
-@bot.event
-async def on_ready():
-    print("Bot has logged in.")
+extensions = [
+    "misc",
+    "events",
+    "moderation",
+    "summoners",
+]
 
-@bot.command()
-async def ping(ctx):
-    await ctx.send("Pong!")
+if __name__ == "__main__":
+    print("Loading dependencies...")
+    for ext in extensions:
+        bot.load_extension("cogs." + ext)
 
-bot.run(os.getenv("BOT_TOKEN"))
+bot.run(os.environ.get("BOT_TOKEN"))
