@@ -8,9 +8,11 @@ verify_ssl = true
 [packages]
 "discord.py" = {extras = ["voice"], version = "*"}
 python-dotenv = "*"
+riotwatcher = "*"
 
 [requires]
 python_version = "3.6"
 
 [scripts]
+start = "python3 src/bot.py"
 dev = "nodemon --exec python3 src/bot.py"
