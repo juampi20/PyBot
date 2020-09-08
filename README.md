@@ -4,7 +4,7 @@
 
 **PyBot** is a simple Discord bot, made with python, for my personal server.
 
-## Installation with [Pipenv](pipenv-web)
+## Installation with [Pipenv][pipenv-web]
 
 To install the environment with the necessary packages, run this code:
 
@@ -16,9 +16,9 @@ To start the bot, run this code:
 
 Make sure you have pipenv installed, eitherwise, manually install:
 
-- [discord.py[voice]](discord.py-web)
-- [python-dotenv](python-dotenv-web)
-- [riotwatcher](riotwatcher-web)
+- [discord.py[voice]][discord.py-web]
+- [python-dotenv][python-dotenv-web]
+- [riotwatcher][riotwatcher-web]
 
 `pip install <package>`
 
