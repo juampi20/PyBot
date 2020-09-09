@@ -1,10 +1,12 @@
 import discord
 from discord.ext import commands
 import asyncio
+import time
 
 class Moderation(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+
 
     @commands.command()
     @commands.is_owner()
@@ -43,7 +45,7 @@ class Moderation(commands.Cog):
         embed = discord.Embed(title=f"Se eliminaron {limit} mensajes de {member.mention}")
         await ctx.send(embed=embed, delete_after=5)
 
-    # FIXME: Mejorar los permisos de Muted
+
     @commands.command()
     @commands.is_owner()
     async def mute(self, ctx):
@@ -56,17 +58,17 @@ class Moderation(commands.Cog):
             
         channel = ctx.author.voice.channel
         members = channel.members
-        muted = discord.utils.get(ctx.guild.roles, name="Muted")
-        
+
         for member in members:
-            await member.add_roles(muted)
+            await member.edit(mute=True)
         
         embed=discord.Embed(title="VOZ SILENCIADA", description="**Es momento de jugar!**  :mute:")
         await ctx.send(embed=embed, delete_after=5)
         
         await asyncio.sleep(300)
         for member in members:
-            await member.remove_roles(muted)
+            await member.edit(mute=False)
+
 
     @commands.command()
     @commands.is_owner()
@@ -80,10 +82,9 @@ class Moderation(commands.Cog):
             
         channel = ctx.author.voice.channel
         members = channel.members
-        muted = discord.utils.get(ctx.guild.roles, name="Muted")
         
         for member in members:
-            await member.remove_roles(muted)
+            await member.edit(mute=False)
             
         embed=discord.Embed(title="VOZ ACTIVADA", description="**Ahora pueden discutir!**  :loud_sound:")
         await ctx.send(embed=embed, delete_after=5)
