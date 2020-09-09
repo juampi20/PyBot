@@ -8,7 +8,7 @@ class Misc(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def args(self, ctx, *, message):
+    async def say(self, ctx, *, message):
         await ctx.message.delete()
         await ctx.send(str(message))
 
