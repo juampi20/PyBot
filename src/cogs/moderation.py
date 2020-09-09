@@ -11,6 +11,7 @@ class Moderation(commands.Cog):
     @commands.command()
     @commands.is_owner()
     async def purge(self, ctx, limit=50, member: discord.Member = None):
+        """Delete messages"""
         # Delete message purge
         await ctx.message.delete()
 
@@ -46,15 +47,17 @@ class Moderation(commands.Cog):
         await ctx.send(embed=embed, delete_after=5)
 
 
+    # @commands.is_owner()
     @commands.command()
-    @commands.is_owner()
+    @commands.has_role("Elite")
     async def mute(self, ctx):
+        """Mute all members of the voice channel"""
         await ctx.message.delete()
         connected = ctx.author.voice
 
         if not connected:
             embed=discord.Embed(title="Debes ingresar un canal de voz!")
-            return await ctx.send(embed=embed)
+            return await ctx.send(embed=embed, delete_after=5)
             
         channel = ctx.author.voice.channel
         members = channel.members
@@ -70,9 +73,11 @@ class Moderation(commands.Cog):
             await member.edit(mute=False)
 
 
+    # @commands.is_owner()
     @commands.command()
-    @commands.is_owner()
+    @commands.has_role("Elite")
     async def unmute(self, ctx):
+        """Unmute all members of the voice channel"""
         await ctx.message.delete()
         connected = ctx.author.voice
 
