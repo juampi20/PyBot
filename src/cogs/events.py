@@ -1,3 +1,4 @@
+import discord
 from discord.ext import commands
 from discord.ext.commands import CommandNotFound
 
@@ -9,6 +10,7 @@ class Events(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         print("Bot has logged in.")
+        await self.bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="personas morir."))
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
