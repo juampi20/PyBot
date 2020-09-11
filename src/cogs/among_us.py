@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 import random
 
-class AmongUsCog(commands.Cog):
+class AmongUs(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -54,9 +54,15 @@ class AmongUsCog(commands.Cog):
     async def unmute(self, ctx):
         """ Unmute all members """
         await ctx.message.delete()
+        connected = ctx.author.voice
 
-        members = ctx.guild.members
-        
+        if not connected:
+            embed=discord.Embed(title="Debes ingresar un canal de voz!")
+            return await ctx.send(embed=embed, delete_after=5)
+            
+        channel = ctx.author.voice.channel
+        members = channel.members
+
         for member in members:
             await member.edit(mute=False)
 
@@ -64,4 +70,4 @@ class AmongUsCog(commands.Cog):
         await ctx.send(embed=embed, delete_after=5)
 
 def setup(bot):
-    bot.add_cog(AmongUsCog(bot))
+    bot.add_cog(AmongUs(bot))
