@@ -70,4 +70,4 @@ class AmongUs(commands.Cog):
         await ctx.send(embed=embed, delete_after=5)
 
 def setup(bot):
-    bot.add_cog(AmongUsCog(bot))
+    bot.add_cog(AmongUs(bot))
