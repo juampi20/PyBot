@@ -18,7 +18,7 @@ class Summoners(commands.Cog):
         return response[0]
 
     @commands.command(name='info')
-    async def get_summoner(self, ctx, *, name : str):
+    async def get_summoner(self, ctx, *, name):
         """Display information on a summoner"""
         try:
             summoner = Player(str(name))
@@ -26,7 +26,7 @@ class Summoners(commands.Cog):
             await ctx.send('Failed to fetch summoner! Error code {}'.format(err.response.status_code))
             return
         
-        #summoner.to_string()
+        # summoner.to_string()
         
         version = self.get_version()
         profile_icon_url = f"http://ddragon.leagueoflegends.com/cdn/{version}/img/profileicon/{summoner.profile_icon_id}.png"
@@ -40,6 +40,15 @@ class Summoners(commands.Cog):
         embed.set_footer(text=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
         
         await ctx.send(embed=embed)
+
+    @commands.command(name="opgg")
+    async def _opgg(self, ctx, *, name):
+        """Pull up op.gg for players"""
+        if name:
+            url = "http://las.op.gg/summoner/userName=" + name.replace(" ", "+")
+        else:
+            return await ctx.send("Coloque un nickname!")
+        await ctx.send(url)
 
 
 def setup(bot):

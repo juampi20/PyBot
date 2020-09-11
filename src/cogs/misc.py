@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 import datetime
+import random
 
 class Misc(commands.Cog):
     
@@ -9,21 +10,24 @@ class Misc(commands.Cog):
 
     @commands.command()
     async def say(self, ctx, *, message):
+        """ The bot repeats what you write to it """
         await ctx.message.delete()
         await ctx.send(str(message))
 
     @commands.command()
     async def ping(self, ctx):
-        """Pong!"""
+        """ Pong! """
         await ctx.send("Pong!")
 
     @commands.command()
     async def hello(self, ctx):
-        await ctx.send(f"Hello, {ctx.author.name}!")
+        """ The bot will greet you! """
+        await ctx.send(f"Hola, {ctx.author.mention}!")
 
     @commands.command()
+    @commands.guild_only()
     async def server(self, ctx):
-        """Get info for the server"""
+        """ Get info for the server """
         embed = discord.Embed(timestamp=datetime.datetime.utcnow(), color=discord.Color.blue())
         embed.set_author(name=f"{ctx.guild.name} - Server Info", icon_url=f"{ctx.guild.icon_url}")
         embed.add_field(name="Server Region:", value=f"`{ctx.guild.region}`", inline=True)
@@ -33,15 +37,11 @@ class Misc(commands.Cog):
         embed.set_footer(text=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
         await ctx.send(embed=embed)
 
+    # FIXME: Get Emoji :name:id:
     @commands.command()
-    async def opgg(self, ctx, *, name):
-        """Pull up op.gg for players"""
-        if name:
-            url = "http://las.op.gg/summoner/userName=" + name.replace(" ", "+")
-        else:
-            return await ctx.send("Coloque un nickname!")
-        
-        await ctx.send(url)
+    async def react(self, ctx):
+        """React this message"""
+        await ctx.message.add_reaction(":ping_pong:")
 
 def setup(bot):
     bot.add_cog(Misc(bot))
