@@ -2,9 +2,9 @@ import discord
 from discord.ext import commands
 import datetime
 import random
+import time
 
 class Misc(commands.Cog):
-    
     def __init__(self, bot):
         self.bot = bot
 
@@ -17,12 +17,22 @@ class Misc(commands.Cog):
     @commands.command()
     async def ping(self, ctx):
         """ Pong! """
-        await ctx.send("Pong!")
+        await ctx.message.delete()
+        before = time.monotonic()
+        message = await ctx.send("Pong!")
+        ping = (time.monotonic() - before) * 1000
+        await message.edit(content=f"Pong!  `{int(ping)}ms`")
 
     @commands.command()
     async def hello(self, ctx):
         """ The bot will greet you! """
         await ctx.send(f"Hola, {ctx.author.mention}!")
+
+    @commands.command(aliases=["cf"])
+    async def coinflip(self, ctx):
+        choices = ("Cara","Cruz")
+        randcoin = random.choice(choices)
+        await ctx.send(randcoin)
 
     @commands.command()
     @commands.guild_only()
