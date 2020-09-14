@@ -1,7 +1,8 @@
 from riotwatcher import LolWatcher
+from settings import RIOT_API_TOKEN
 import os
 
-watcher = LolWatcher(os.environ.get("RIOT_API_TOKEN"))
+watcher = LolWatcher(RIOT_API_TOKEN)
 default_region = "la2"
 
 class Player:
