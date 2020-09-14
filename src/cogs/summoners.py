@@ -3,10 +3,11 @@ from discord.ext import commands
 from requests import HTTPError
 from objects.player import Player
 from riotwatcher import LolWatcher
+from settings import RIOT_API_TOKEN
 import os, datetime, requests, json
 
-watcher = LolWatcher(os.environ.get("RIOT_API_TOKEN"))
-default_region = "LA2"
+watcher = LolWatcher(RIOT_API_TOKEN)
+default_region = "la2"
 
 class Summoners(commands.Cog):
     def __init__(self, bot):
