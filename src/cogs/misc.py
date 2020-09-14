@@ -17,7 +17,6 @@ class Misc(commands.Cog):
     @commands.command()
     async def ping(self, ctx):
         """ Pong! """
-        await ctx.message.delete()
         before = time.monotonic()
         message = await ctx.send("Pong!")
         ping = (time.monotonic() - before) * 1000
@@ -30,9 +29,10 @@ class Misc(commands.Cog):
 
     @commands.command(aliases=["cf"])
     async def coinflip(self, ctx):
+        """ Flip a coin and give a result [Heads, Tails] """
         choices = ("Cara","Cruz")
         randcoin = random.choice(choices)
-        await ctx.send(randcoin)
+        await ctx.send(f"Resultado: `{randcoin}`")
 
     @commands.command()
     @commands.guild_only()
@@ -47,11 +47,10 @@ class Misc(commands.Cog):
         embed.set_footer(text=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
         await ctx.send(embed=embed)
 
-    # FIXME: Get Emoji :name:id:
     @commands.command()
     async def react(self, ctx):
         """React this message"""
-        await ctx.message.add_reaction(":ping_pong:")
+        await ctx.message.add_reaction("😀")
 
 def setup(bot):
     bot.add_cog(Misc(bot))
