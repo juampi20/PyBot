@@ -1,14 +1,17 @@
 import discord
 from discord.ext import commands
 import asyncio
+import time
 
 class Moderation(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
+
+    @commands.command(name="purge", aliases=["clear", "clean"])
     @commands.is_owner()
-    async def purge(self, ctx, limit=50, member: discord.Member = None):
+    async def _purge(self, ctx, limit=50, member: discord.Member = None):
+        """Delete messages"""
         # Delete message purge
         await ctx.message.delete()
 
@@ -42,51 +45,28 @@ class Moderation(commands.Cog):
         await ctx.channel.delete_messages(msg)
         embed = discord.Embed(title=f"Se eliminaron {limit} mensajes de {member.mention}")
         await ctx.send(embed=embed, delete_after=5)
-
-    # FIXME: Mejorar los permisos de Muted
-    @commands.command()
-    @commands.is_owner()
-    async def mute(self, ctx):
-        await ctx.message.delete()
-        connected = ctx.author.voice
-
-        if not connected:
-            embed=discord.Embed(title="Debes ingresar un canal de voz!")
-            return await ctx.send(embed=embed)
-            
-        channel = ctx.author.voice.channel
-        members = channel.members
-        muted = discord.utils.get(ctx.guild.roles, name="Muted")
         
-        for member in members:
-            await member.add_roles(muted)
-        
-        embed=discord.Embed(title="VOZ SILENCIADA", description="**Es momento de jugar!**  :mute:")
-        await ctx.send(embed=embed, delete_after=5)
-        
-        await asyncio.sleep(300)
-        for member in members:
-            await member.remove_roles(muted)
+        @commands.command(name='perms', aliases=['perms_for', 'permissions'])
+        @commands.guild_only()
+        async def check_permissions(self, ctx, *, member: discord.Member=None):
+            """A simple command which checks a members Guild Permissions.
+            If member is not provided, the author will be checked."""
 
-    @commands.command()
-    @commands.is_owner()
-    async def unmute(self, ctx):
-        await ctx.message.delete()
-        connected = ctx.author.voice
+            if not member:
+                member = ctx.author
 
-        if not connected:
-            embed=discord.Embed(title="Debes ingresar un canal de voz!")
-            return await ctx.send(embed=embed)
-            
-        channel = ctx.author.voice.channel
-        members = channel.members
-        muted = discord.utils.get(ctx.guild.roles, name="Muted")
-        
-        for member in members:
-            await member.remove_roles(muted)
-            
-        embed=discord.Embed(title="VOZ ACTIVADA", description="**Ahora pueden discutir!**  :loud_sound:")
-        await ctx.send(embed=embed, delete_after=5)
+            # Here we check if the value of each permission is True.
+            perms = '\n'.join(perm for perm, value in member.guild_permissions if value)
+
+            # And to make it look nice, we wrap it in an Embed.
+            embed = discord.Embed(title='Permissions for:', description=ctx.guild.name, colour=member.colour)
+            embed.set_author(icon_url=member.avatar_url, name=str(member))
+
+            # \uFEFF is a Zero-Width Space, which basically allows us to have an empty field name.
+            embed.add_field(name='\uFEFF', value=perms)
+
+            await ctx.send(content=None, embed=embed)
+
 
 def setup(bot):
     bot.add_cog(Moderation(bot))
