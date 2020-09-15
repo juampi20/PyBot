@@ -9,6 +9,7 @@ verify_ssl = true
 "discord.py" = {extras = ["voice"], version = "*"}
 python-dotenv = "*"
 riotwatcher = "*"
+sqlalchemy = "*"
 
 [requires]
 python_version = "3.6"
