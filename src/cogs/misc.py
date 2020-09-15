@@ -60,18 +60,6 @@ class Misc(commands.Cog):
         embed.add_field(name='Tu respuesta:', value=random.choice(choices), inline=False)
         await ctx.send(embed=embed)
 
-    @commands.command()
-    @commands.guild_only()
-    async def server(self, ctx):
-        """Get info for the server"""
-        embed = discord.Embed(timestamp=datetime.datetime.utcnow(), color=discord.Color.blue())
-        embed.set_author(name=f"{ctx.guild.name} - Server Info", icon_url=f"{ctx.guild.icon_url}")
-        embed.add_field(name="Server Region:", value=f"`{ctx.guild.region}`", inline=True)
-        embed.add_field(name="Server Owner:", value=f"`{ctx.guild.owner}`", inline=True)
-        embed.add_field(name="Server ID:", value=f"`{ctx.guild.id}`", inline=False)
-        embed.add_field(name="Server created at:", value=f"`{ctx.guild.created_at}`", inline=False)
-        embed.set_footer(text=f"{ctx.author.name}", icon_url=f"{ctx.author.avatar_url}")
-        await ctx.send(embed=embed)
 
     @commands.command()
     async def react(self, ctx):
