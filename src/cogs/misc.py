@@ -57,7 +57,7 @@ class Misc(commands.Cog):
         embed = discord.Embed(color=author.color)
         embed.set_author(name=author.name, icon_url=author.avatar_url)
         embed.add_field(name="Tu pregunta:", value= question, inline=False)
-        embed.add_field(name='Your answer:', value=random.choice(choices), inline=False)
+        embed.add_field(name='Tu respuesta:', value=random.choice(choices), inline=False)
         await ctx.send(embed=embed)
 
     @commands.command()
