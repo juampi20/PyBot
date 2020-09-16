@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 import random
+import json
 
 toggle = True
 
@@ -9,23 +10,15 @@ class AmongUs(commands.Cog):
         self.bot = bot
 
     @commands.command(aliases=["choice","ch"])
-    async def choose(self, ctx, *choices: str):
+    async def choose(self, ctx, *members: str):
         """ Chooses between multiple choices """
-        msg = [
-            "El impostor debe ser",
-            "Sospecho de",
-            "No creo que sea",
-            "Quizas sea",
-            "Estoy seguro que es",
-            "Lo vi meterse en las alcantarillas a",
-            "Lo vi escanearse a",
-            "Lo vi tirar la basura a",
-            "Vi que no esta haciendo tareas",
-            "Me parece que es",
-            "Porque yo lo digo! Es"
-        ]
-        
-        embed = discord.Embed(title=f"{random.choice(msg)} {random.choice(choices)}.")
+        with open('src/data/amongus.json', 'r') as f:
+            choices = json.load(f)
+        author = ctx.message.author
+        embed = discord.Embed(color=author.color)
+        embed.set_author(name=author.name, icon_url=author.avatar_url)
+        embed.add_field(name="Opciones:", value=(", ".join(members)), inline=False)
+        embed.add_field(name='Respuesta:', value=f"{random.choice(choices)} {random.choice(members)}.", inline=False)
         await ctx.send(embed=embed)
 
 

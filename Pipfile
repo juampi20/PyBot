@@ -10,6 +10,7 @@ verify_ssl = true
 python-dotenv = "*"
 riotwatcher = "*"
 sqlalchemy = "*"
+psycopg2-binary = "*"
 
 [requires]
 python_version = "3.6"
