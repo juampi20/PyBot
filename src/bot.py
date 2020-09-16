@@ -2,7 +2,9 @@ import os
 import discord
 from discord.ext import commands
 from settings import PREFIX, BOT_TOKEN
-
+from os import listdir
+from os.path import isfile, join, dirname
+import sys, traceback
 # TODO: Create database compatible on Heroku
 
 # # Import sqlalchemy
@@ -20,20 +22,12 @@ from settings import PREFIX, BOT_TOKEN
 
 bot = commands.Bot(command_prefix=commands.when_mentioned_or(PREFIX))
 
-extensions = [f.split(".")[0] for f in os.listdir(os.path.join(os.path.dirname(__file__), 'cogs')) if f.endswith('.py')]
-
-def load_extensions(cogs=None, path='cogs.'):
-    '''Loads the default set of extensions or a seperate one if given'''
-    for extension in cogs or extensions:
+if __name__ == '__main__':
+    for extension in [f.split(".")[0] for f in listdir(join(dirname(__file__), 'cogs')) if f.endswith('.py')]:
         try:
-            bot.load_extension(f'{path}{extension}')
-            print(f'Loaded extension: {extension}')
-        except Exception as e:
-            print(f'LoadError: {extension}\n'
-                    f'{type(e).__name__}: {e}')
-
-if __name__ == "__main__":
-    print("Loading extensions...")
-    load_extensions()
+            bot.load_extension('cogs' + "." + extension)
+        except (discord.ClientException, ModuleNotFoundError):
+            print(f'Failed to load extension {extension}.')
+            traceback.print_exc()
 
 bot.run(BOT_TOKEN)
