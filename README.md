@@ -6,6 +6,10 @@
 
 ## Installation with [Pipenv][pipenv-web]
 
+If you dont have pipenv:
+
+`pip3 install --user pipenv`
+
 To install the environment with the necessary packages, run this code:
 
 `pipenv install`
