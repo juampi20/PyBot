@@ -1,7 +1,7 @@
-import discord
 from discord.ext import commands
 from discord.ext.commands import CommandNotFound
 from settings import PREFIX
+import discord
 
 class Events(commands.Cog):
     
@@ -24,6 +24,8 @@ class Events(commands.Cog):
 	    #this line handles the case for the bot itself 
         if message.author == self.bot.user:
             return
+        if message.guild:
+            pass
 
     @commands.Cog.listener()
     async def on_voice_state_update(self, ctx, before, after):

@@ -8,9 +8,10 @@ verify_ssl = true
 [packages]
 "discord.py" = {extras = ["voice"], version = "*"}
 python-dotenv = "*"
-riotwatcher = "*"
 sqlalchemy = "*"
 psycopg2-binary = "*"
+cassiopeia = "*"
+riotwatcher = "*"
 
 [requires]
 python_version = "3.6"

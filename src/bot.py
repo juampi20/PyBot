@@ -1,13 +1,12 @@
-import os, sys, traceback
+import os
+import sys
+import traceback
 import discord
 from discord.ext import commands
 from settings import PREFIX, BOT_TOKEN, DATABASE_URL
 from os import listdir
 from os.path import isfile, join, dirname
 
-# TODO: Create database compatible on Heroku
-
-# Import sqlalchemy
 from sqlalchemy import engine, create_engine
 from sqlalchemy.orm import sessionmaker
 from utils.models import Base, Member
