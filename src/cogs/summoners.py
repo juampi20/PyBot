@@ -38,18 +38,19 @@ class Summoners(commands.Cog):
             else:
                 raise
 
-        ret = "Name: " + player.name + "\n"
-        ret += "Level: " + player.summoner_level
-        rank = "Solo/Duo: " + player.solo_rank + "\n"
-        rank += "Flex 5v5: " + player.flex_rank
+        ret = f"**Name:** {player.name}\n"
+        ret += f"**Level:** {player.summoner_level}\n"
+        rank = f"**Solo/Duo:** {player.solo_rank}\n"
+        rank += f"**Flex 5v5:** {player.flex_rank}\n"
 
         url = "http://las.op.gg/summoner/userName=" + name.replace(" ", "+")
 
         # Generate Embed
         embed = discord.Embed(color=discord.Color.blue())
-        embed.add_field(name="Summoner Info:", value=ret)
-        embed.add_field(name="Ranked Info:", value=rank)
-        embed.set_author(name=player.name, url=url)
+        # embed.set_author(name=player.name, url=url, icon_url=player.icon_url)
+        embed.set_thumbnail(url=None or player.icon_url)
+        embed.add_field(name="Summoner Info:", value=ret, inline=False)
+        embed.add_field(name="Ranked Info:", value=rank, inline=False)
         await ctx.send(embed=embed)
 
     @commands.command(name="opgg")

@@ -1,25 +1,31 @@
 import datetime
 
+import cassiopeia as cass
+from cassiopeia import Summoner
 from riotwatcher import LolWatcher
 from settings import RIOT_API_TOKEN
 
+cass.apply_settings(cass.get_default_config())
+cass.set_riot_api_key(RIOT_API_TOKEN)
+cass.set_default_region("las")
 
 watcher = LolWatcher(RIOT_API_TOKEN)
-default_region = "las"
+default_region = "la2"
 
 
 class Player:
     def __init__(self, name):
-        print("[Player] Buscando.")
-        summoner = watcher.summoner.by_name(default_region, "Franxs")
-        print(summoner)
-        print("[Player] Encontrado.")
+
+        summoner = watcher.summoner.by_name(default_region, name)
+        s = Summoner(name=name)
+
         # Main account information
         self.name = summoner["name"]
         self.summoner_level = str(summoner["summonerLevel"])
         self.revision_date = summoner["revisionDate"]
         self.id = summoner["id"]
         self.account_id = summoner["accountId"]
+        self.icon_url = s.profile_icon.url
 
         # Ranked information
         self.solo_rank = "N/A"
