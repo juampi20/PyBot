@@ -1,12 +1,18 @@
-import cassiopeia
+import datetime
+
+import cassiopeia as cass
+from cassiopeia import Summoner
 import discord
 from discord.ext import commands
 from objects.player import Player
 from riotwatcher import ApiError, LolWatcher
 from settings import RIOT_API_TOKEN
 
+cass.apply_settings(cass.get_default_config())
+cass.set_riot_api_key(RIOT_API_TOKEN)
+cass.set_default_region("las")
+
 watcher = LolWatcher(RIOT_API_TOKEN)
-cassiopeia.set_riot_api_key(RIOT_API_TOKEN)
 default_region = "la2"
 
 
@@ -17,6 +23,7 @@ class Summoners(commands.Cog):
     @commands.command()
     async def info(self, ctx, *, name: str):
         """Display information on a summoner"""
+        author = ctx.author
         try:
             player = Player(name)
         except ApiError as err:
@@ -40,17 +47,41 @@ class Summoners(commands.Cog):
 
         ret = f"**Name:** {player.name}\n"
         ret += f"**Level:** {player.summoner_level}\n"
+
         rank = f"**Solo/Duo:** {player.solo_rank}\n"
         rank += f"**Flex 5v5:** {player.flex_rank}\n"
 
         url = "http://las.op.gg/summoner/userName=" + name.replace(" ", "+")
 
         # Generate Embed
-        embed = discord.Embed(color=discord.Color.blue())
-        # embed.set_author(name=player.name, url=url, icon_url=player.icon_url)
+        print("Generando Embed.")
+        embed = discord.Embed(
+            color=discord.Color.blue(), timestamp=datetime.datetime.now()
+        )
+        embed.set_author(name=player.name, url=url, icon_url=player.icon_url)
+        embed.set_footer(text=f"Request by {author.name}", icon_url=author.avatar_url)
         embed.set_thumbnail(url=None or player.icon_url)
         embed.add_field(name="Summoner Info:", value=ret, inline=False)
         embed.add_field(name="Ranked Info:", value=rank, inline=False)
+        await ctx.send(embed=embed)
+
+    @commands.command(aliases=["cm", "maestries"])
+    async def champ_maestries(self, ctx, *, name: str):
+        author = ctx.author
+        s = Summoner(name=name)
+        top_champs = ""
+        for cm in s.champion_masteries.filter(
+            lambda cm: cm.level >= 7
+        ):
+            top_champs += f"{cm.champion.name} ({cm.points} pts)\n"
+        
+        embed = discord.Embed(
+            color=discord.Color.blue(), timestamp=datetime.datetime.now()
+        )
+        embed.set_thumbnail(url=None or s.profile_icon.url)
+        embed.set_author(name=s.name, icon_url=s.profile_icon.url)
+        embed.set_footer(text=f"Request by {author.name}", icon_url=author.avatar_url)
+        embed.add_field(name="Champion Mastery:", value=top_champs, inline=False)
         await ctx.send(embed=embed)
 
     @commands.command(name="opgg")

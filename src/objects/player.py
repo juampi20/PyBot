@@ -72,10 +72,6 @@ class Player:
                 self.threes_rank = rank_to_string(stats)
                 self.threes_tier = stats.get("tier").lower().capitalize()
 
-    def get_version(self):
-        versions = watcher.data_dragon.versions_for_region(default_region)
-        return versions[0]
-
 
 def rank_to_string(ranked_stats):
     tier = ranked_stats.get("tier").lower().capitalize()
