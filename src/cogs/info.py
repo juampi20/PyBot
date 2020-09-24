@@ -41,28 +41,29 @@ class Info(commands.Cog):
 
         embed = discord.Embed(color=discord.Color.blue())
         embed.set_thumbnail(url=None or guild.icon_url)
-        embed.add_field(
-            name="Server Information",
-            inline=False,
-            value=f"Owner: {guild.owner}\nVoice region: {guild.region}\nUsers online: {total_online}/{total_users}",
-        )
-        embed.add_field(
-            name="Channel counts",
-            inline=False,
-            value=f"Category channels: {categories}\nText channels: {text_channels}\nVoice channels: {voice_channels}",
-        )
-        embed.add_field(
-            name="Member counts",
-            inline=False,
-            value=f"Members: {total_users}\nRoles: {total_roles}",
-        )
-        embed.add_field(
-            name="Member statuses",
-            inline=False,
-            value=f"🟢 {online}\n🟡 {idle}\n🔴 {dnd}\n",
-        )
 
-        # ⚫ {offline}
+        ret = f"Owner: {guild.owner}\n"
+        ret += f"Voice region: {guild.region}\n"
+        ret += f"Users online: {total_online}/{total_users}\n"
+
+        embed.add_field(name="Server Information", inline=False, value=ret)
+
+        ret = f"Category channels: {categories}\n"
+        ret += f"Text channels: {text_channels}\n"
+        ret += f"Voice channels: {voice_channels}\n"
+
+        embed.add_field(name="Channel counts", inline=False, value=ret)
+
+        ret = f"Members: {total_users}\n"
+        ret += f"Roles: {total_roles}\n"
+
+        embed.add_field(name="Member counts", inline=False, value=ret)
+
+        ret = f"🟢 {online}\n"
+        ret += f"🟡 {idle}\n"
+        ret += f"🔴 {dnd}\n"
+
+        embed.add_field(name="Member statuses", inline=False, value=ret)
         # embed.set_author(name=guild.name, icon_url=None or guild.icon_url)
         await ctx.send(embed=embed)
 
