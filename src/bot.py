@@ -1,13 +1,11 @@
-import os
-import sys
+from os import listdir
+from os.path import dirname, join
 import traceback
+
 import discord
 from discord.ext import commands
-from settings import PREFIX, BOT_TOKEN, DATABASE_URL
-from os import listdir
-from os.path import isfile, join, dirname
-
-from sqlalchemy import engine, create_engine
+from settings import BOT_TOKEN, DATABASE_URL, PREFIX
+from sqlalchemy import create_engine, engine
 from sqlalchemy.orm import sessionmaker
 from utils.models import Base, Member
 
@@ -21,12 +19,16 @@ if not engine.dialect.has_table(engine, "member"):
 
 bot = commands.Bot(command_prefix=commands.when_mentioned_or(PREFIX))
 
-if __name__ == '__main__':
-    for extension in [f.split(".")[0] for f in listdir(join(dirname(__file__), 'cogs')) if f.endswith('.py')]:
+if __name__ == "__main__":
+    for extension in [
+        f.split(".")[0]
+        for f in listdir(join(dirname(__file__), "cogs"))
+        if f.endswith(".py")
+    ]:
         try:
-            bot.load_extension('cogs.' + extension)
+            bot.load_extension("cogs." + extension)
         except (discord.ClientException, ModuleNotFoundError):
-            print(f'Failed to load extension {extension}.')
+            print(f"Failed to load extension {extension}.")
             traceback.print_exc()
 
 bot.run(BOT_TOKEN)

@@ -1,5 +1,6 @@
 from discord.ext import commands
 
+
 class Leveling(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -15,6 +16,7 @@ class Leveling(commands.Cog):
     @commands.command()
     async def rank(self, ctx):
         pass
+
 
 def setup(bot):
     bot.add_cog(Leveling(bot))

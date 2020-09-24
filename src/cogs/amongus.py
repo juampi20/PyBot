@@ -1,26 +1,31 @@
+import json
+import random
+
 import discord
 from discord.ext import commands
-import random
-import json
 
 toggle = True
+
 
 class AmongUs(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(aliases=["choice","ch"])
+    @commands.command(aliases=["choice", "ch"])
     async def choose(self, ctx, *members: str):
         """ Chooses between multiple choices """
-        with open('src/data/amongus.json', 'r') as f:
+        with open("src/data/amongus.json", "r") as f:
             choices = json.load(f)
         author = ctx.message.author
         embed = discord.Embed(color=author.color)
         embed.set_author(name=author.name, icon_url=author.avatar_url)
         embed.add_field(name="Opciones:", value=(", ".join(members)), inline=False)
-        embed.add_field(name='Respuesta:', value=f"{random.choice(choices)} {random.choice(members)}.", inline=False)
+        embed.add_field(
+            name="Respuesta:",
+            value=f"{random.choice(choices)} {random.choice(members)}.",
+            inline=False,
+        )
         await ctx.send(embed=embed)
-
 
     @commands.command(aliases=["m"])
     @commands.has_role("Elite")
@@ -33,13 +38,14 @@ class AmongUs(commands.Cog):
                 if user.bot != True:
                     await user.edit(mute=True)
                     toggle = False
-            await ctx.message.add_reaction("👌")        
+            await ctx.message.add_reaction("👌")
         else:
             voice_channel = ctx.author.voice.channel
             for user in voice_channel.members:
                 await user.edit(mute=False)
                 toggle = True
             await ctx.message.add_reaction("👌")
+
 
 def setup(bot):
     bot.add_cog(AmongUs(bot))
