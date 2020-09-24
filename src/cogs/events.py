@@ -29,11 +29,6 @@ class Events(commands.Cog):
         if message.guild:
             pass
 
-    @commands.Cog.listener()
-    async def on_voice_state_update(self, ctx, before, after):
-        # await ctx.send("Howdy")
-        pass
-
 
 def setup(bot):
     bot.add_cog(Events(bot))
