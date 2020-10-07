@@ -9,12 +9,12 @@ verify_ssl = true
 "discord.py" = {extras = ["voice"], version = "*"}
 python-dotenv = "*"
 sqlalchemy = "*"
-psycopg2-binary = "*"
 cassiopeia = "*"
 riotwatcher = "*"
+psycopg2-binary = "*"
 
 [requires]
-python_version = "3.6"
+python_version = "3.8"
 
 [scripts]
 start = "python3 src/bot.py"
