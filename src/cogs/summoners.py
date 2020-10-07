@@ -70,11 +70,9 @@ class Summoners(commands.Cog):
         author = ctx.author
         s = Summoner(name=name)
         top_champs = ""
-        for cm in s.champion_masteries.filter(
-            lambda cm: cm.level >= 7
-        ):
+        for cm in s.champion_masteries.filter(lambda cm: cm.level >= 7):
             top_champs += f"{cm.champion.name} ({cm.points} pts)\n"
-        
+
         embed = discord.Embed(
             color=discord.Color.blue(), timestamp=datetime.datetime.now()
         )

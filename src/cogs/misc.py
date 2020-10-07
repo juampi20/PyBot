@@ -41,7 +41,7 @@ class Misc(commands.Cog):
         """Quick embed messages"""
         await ctx.message.delete()
         embed = discord.Embed(color=random.randint(0, 0xFFFFFF))
-        embed.title = message
+        embed.description = message
         await ctx.send(embed=embed)
 
     @commands.command(aliases=["8ball"])
