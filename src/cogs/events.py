@@ -1,3 +1,5 @@
+import textwrap
+
 import discord
 from discord.ext import commands
 from discord.ext.commands import CommandNotFound
@@ -10,9 +12,16 @@ class Events(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print("Bot has logged in.")
+        print(
+            "-----\n"
+            f"Bot has logged in as @{self.bot.user.name} : {self.bot.user.id}\n"
+            "-----\n"
+            f"Current Prefix: {PREFIX}\n"
+            "-----"
+        )
         await self.bot.change_presence(
-            activity=discord.Game(name=f"Commands: {PREFIX}help")
+            status=discord.Status.online,
+            activity=discord.Game(name=f"Commands: {PREFIX}help"),
         )
 
     @commands.Cog.listener()

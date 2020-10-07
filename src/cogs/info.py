@@ -17,7 +17,7 @@ class Info(commands.Cog):
         embed.set_image(url=avatar)
         await ctx.send(embed=embed)
 
-    @commands.command(aliases=["si", "serverinfo", "svi"])
+    @commands.command(aliases=["si", "serverinfo"])
     @commands.guild_only()
     async def server(self, ctx):
         """Get info for the server"""
@@ -42,23 +42,27 @@ class Info(commands.Cog):
         embed = discord.Embed(color=discord.Color.blue())
         embed.set_thumbnail(url=None or guild.icon_url)
 
+        # Server Information
         ret = f"Owner: {guild.owner}\n"
         ret += f"Voice region: {guild.region}\n"
         ret += f"Users online: {total_online}/{total_users}\n"
 
         embed.add_field(name="Server Information", inline=False, value=ret)
 
+        # Channel counts
         ret = f"Category channels: {categories}\n"
         ret += f"Text channels: {text_channels}\n"
         ret += f"Voice channels: {voice_channels}\n"
 
         embed.add_field(name="Channel counts", inline=False, value=ret)
 
+        # Member counts
         ret = f"Members: {total_users}\n"
         ret += f"Roles: {total_roles}\n"
 
         embed.add_field(name="Member counts", inline=False, value=ret)
 
+        # Member statuses
         ret = f"🟢 {online}\n"
         ret += f"🟡 {idle}\n"
         ret += f"🔴 {dnd}\n"

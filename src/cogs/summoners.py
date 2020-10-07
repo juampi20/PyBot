@@ -30,17 +30,13 @@ class Summoners(commands.Cog):
         except ApiError as err:
             if err.response.status_code == 429:
                 print(
-                    "We should retry in {} seconds.".format(err.headers["Retry-After"])
+                    f"""We should retry in {err.headers['Retry-After']} seconds
+                    this retry-after is handled by default by the RiotWatcher library
+                    future requests wait until the retry-after time passes"""
                 )
-                print(
-                    "this retry-after is handled by default by the RiotWatcher library"
-                )
-                print("future requests wait until the retry-after time passes")
             elif err.response.status_code == 404:
                 await ctx.send(
-                    "Failed to fetch summoner! Error code {}".format(
-                        err.response.status_code
-                    )
+                    f"Failed to fetch summoner! Error code {err.response.status_code}"
                 )
                 return
             else:
@@ -55,7 +51,6 @@ class Summoners(commands.Cog):
         url = "http://las.op.gg/summoner/userName=" + name.replace(" ", "+")
 
         # Generate Embed
-        print("Generando Embed.")
         embed = discord.Embed(
             color=discord.Color.blue(), timestamp=datetime.datetime.now()
         )
@@ -68,6 +63,7 @@ class Summoners(commands.Cog):
 
     @commands.command(aliases=["cm", "maestries"])
     async def champ_maestries(self, ctx, *, name: str):
+        """Display summoner's champion maestries"""
         author = ctx.author
         s = Summoner(name=name)
         top_champs = ""
