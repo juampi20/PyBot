@@ -24,6 +24,7 @@ class Summoners(commands.Cog):
     async def info(self, ctx, *, name: str):
         """Display information on a summoner"""
         author = ctx.author
+        player = None
         try:
             player = Player(name)
         except ApiError as err:
