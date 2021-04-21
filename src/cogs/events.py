@@ -1,9 +1,8 @@
-import textwrap
-
 import discord
 from discord.ext import commands
 from discord.ext.commands import CommandNotFound
-from settings import PREFIX
+
+from src.settings import PREFIX
 
 
 class Events(commands.Cog):
@@ -15,7 +14,6 @@ class Events(commands.Cog):
         print(
             "-----\n"
             f"Bot has logged in as @{self.bot.user.name} : {self.bot.user.id}\n"
-            "-----\n"
             f"Current Prefix: {PREFIX}\n"
             "-----"
         )
@@ -37,6 +35,7 @@ class Events(commands.Cog):
             return
         if message.guild:
             pass
+        await self.bot.process_commands(message)
 
 
 def setup(bot):

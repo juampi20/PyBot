@@ -1,10 +1,9 @@
 import json
 import random
-from discord import colour
-import pyjokes
+
 import discord
+import pyjokes
 from discord.ext import commands
-from pyjokes import jokes_es
 
 
 class Fun(commands.Cog):

@@ -3,7 +3,8 @@ import datetime
 import cassiopeia as cass
 from cassiopeia import Summoner
 from riotwatcher import LolWatcher
-from settings import RIOT_API_TOKEN
+
+from src.settings import RIOT_API_TOKEN
 
 cass.apply_settings(cass.get_default_config())
 cass.set_riot_api_key(RIOT_API_TOKEN)
@@ -40,13 +41,8 @@ class Player:
     def to_string(self):
         ret = "Name: " + self.name + "\n"
         ret += "\tSummoner Level: " + self.summoner_level + "\n"
-        ret += (
-            "\tRevision Date: "
-            + datetime.datetime.fromtimestamp(self.revision_date / 1000.0).strftime(
-                "%m-%d-%Y %H:%M:%S"
-            )
-            + "\n"
-        )
+        ret += ("\tRevision Date: " + datetime.datetime.fromtimestamp(self.revision_date / 1000.0).strftime(
+            "%m-%d-%Y %H:%M:%S") + "\n")
         ret += "\tID: " + str(self.id) + "\n"
         ret += "\tAccount ID: " + str(self.account_id) + "\n"
         ret += "\tRanked: \n"

@@ -32,10 +32,10 @@ class AmongUs(commands.Cog):
     async def mute(self, ctx):
         """Mute and Unmute all in voice channel"""
         global toggle
-        if toggle == True:
+        if toggle:
             voice_channel = ctx.author.voice.channel
             for user in voice_channel.members:
-                if user.bot != True:
+                if not user.bot:
                     await user.edit(mute=True)
                     toggle = False
             await ctx.message.add_reaction("👌")

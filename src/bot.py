@@ -1,13 +1,14 @@
+import traceback
 from os import listdir
 from os.path import dirname, join
-import traceback
 
 import discord
 from discord.ext import commands
-from settings import BOT_TOKEN, DATABASE_URL, PREFIX
-from sqlalchemy import create_engine, engine
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from utils.models import Base, Member
+
+from settings import BOT_TOKEN, DATABASE_URL, PREFIX
+from utils.models import Base
 
 engine = create_engine(DATABASE_URL, echo=False)
 Session = sessionmaker(bind=engine)

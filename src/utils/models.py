@@ -1,8 +1,9 @@
 from sqlalchemy import Column
-from sqlalchemy.dialects.sqlite import DATETIME, INTEGER, TEXT
+from sqlalchemy.dialects.sqlite import INTEGER, TEXT
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
+
 
 # TODO: Member Model for Leveling
 
